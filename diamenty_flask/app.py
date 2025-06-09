@@ -39,12 +39,12 @@ def index():
     # Wykres 2: Średnia cena wg koloru i jakości cięcia
     avg_price_data = df.groupby(['color', 'cut'])['price'].mean().reset_index()
     fig2 = px.bar(avg_price_data, x='color', y='price', color='cut', barmode='group',
-                  title='Średnia cena wg koloru i cięcia')
+                  title='Średnia cena wg koloru i cięcia', width=900)
     graph2 = pio.to_html(fig2, full_html=False)
 
     # Wykres 3: 3D scatter (x, y, z, cena)
     fig3 = px.scatter_3d(df.sample(1000), x='x', y='y', z='z', color='price',
-                         title='Rozkład wymiarów (x, y, z) i cena')
+                         title='Rozkład wymiarów (x, y, z) i cena', width=900)
     graph3 = pio.to_html(fig3, full_html=False)
 
     # Wykres 4: Heatmapa korelacji
@@ -58,7 +58,7 @@ def index():
         zmax=1,
         colorbar=dict(title="Korelacja")
     ))
-    fig4.update_layout(title="Macierz korelacji cech liczbowych")
+    fig4.update_layout(title="Macierz korelacji cech liczbowych", width=900)
     graph4 = pio.to_html(fig4, full_html=False)
 
     # Wykres 5: Mapa losowych lokalizacji (scatter_geo)
@@ -70,7 +70,7 @@ def index():
     location_avg = df_map.groupby('country')['price'].mean().reset_index()
     fig_map = px.choropleth(location_avg, locations='country', locationmode='country names',
                             color='price', title='Średnia cena diamentów wg kraju (losowo)',
-                            color_continuous_scale='Viridis')
+                            color_continuous_scale='Viridis', width = 900)
     map_graph = pio.to_html(fig_map, full_html=False)
 
     return render_template("index.html",
